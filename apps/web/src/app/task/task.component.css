@@ -1,0 +1,29 @@
+.task{
+    border: 0.3px solid lightgray;
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.success{
+    border: 1px solid var(--primary-color);
+    border-radius:12px;
+}
+
+.scheduled{
+    border: 1px solid lightblue;
+    border-radius:12px;
+}
+
+.taxon{
+    border: 1px solid brown;
+    border-radius:12px;
+}
+
+.CREATE_PRODUCT{
+    border: 1px solid purple;
+    border-radius:12px;
+}
+.promotion{
+    border: 1px solid skyblue;
+    border-radius:12px;
+}

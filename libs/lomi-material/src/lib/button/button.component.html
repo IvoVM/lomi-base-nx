@@ -1,0 +1,15 @@
+<button [color]="color" (click)="onClick($event)" *ngIf="!buttonType || buttonType === 'lm-button'" mat-button>
+    <ng-container *ngTemplateOutlet="contentTmpl"></ng-container>
+</button>
+<button (click)="onClick($event)" [color]="color" *ngIf="buttonType === 'lm-raised-button'" mat-raised-button>
+    <ng-container *ngTemplateOutlet="contentTmpl"></ng-container>
+</button>
+<button (click)="onClick($event)" [color]="color" *ngIf="buttonType === 'lm-stroked-button'" mat-stroked-button>
+    <ng-container *ngTemplateOutlet="contentTmpl"></ng-container>
+</button>
+<button (click)="onClick($event)" [color]="color" *ngIf="buttonType === 'lm-flat-button'" mat-flat-button>
+    <ng-container *ngTemplateOutlet="contentTmpl"></ng-container>
+</button>
+<ng-template #contentTmpl>
+    <ng-content></ng-content>
+</ng-template>

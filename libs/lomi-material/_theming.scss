@@ -1,0 +1,152 @@
+ 
+ @import '@angular/material/theming';
+ // Plus imports for other components in your app.
+ 
+ // Include the common styles for Angular Material. We include this here so that you only
+ // have to load a single css file for Angular Material in your app.
+ // Be sure that you only ever include this mixin once!
+ @include mat-core();
+ 
+ // Define the palettes for your theme using the Material Design palettes available in palette.scss
+ // (imported above). For each palette, you can optionally specify a default, lighter, and darker
+ // hue. Available color palettes: https://material.io/design/color/
+ $lomi-app-primary: mat-palette($mat-green, A700);
+ $lomi-app-accent:  mat-palette($mat-blue-gray, 800);
+ 
+ // The warn palette is optional (defaults to red).
+ $lomi-app-warn:    mat-palette($mat-deep-orange, A400);
+ 
+ // Create the theme object (a Sass map containing all of the palettes).
+ $lomi-app-theme: mat-light-theme($lomi-app-primary, $lomi-app-accent, $lomi-app-warn);
+ 
+ // Include theme styles for core and each component used in your app.
+ // Alternatively, you can import and @include the theme mixins for each component
+ // that you are using.
+ @include angular-material-theme($lomi-app-theme);
+ 
+ body{
+    font-family: system-ui;
+
+    --text-color: #424962;
+    --text-lighter-color: #B0B1B2;
+    --text-contrast-color: #FFFFFF;
+
+    --accent-color: #424962;
+    --primary-color: #00C686;
+    --warning-color: #FF4C12;
+    --grey-light-color: #F5F5F5;
+ }
+
+ body{
+   .mdc-label{
+      font-family: system-ui;
+   }
+   --modal-width: 600px;
+   margin: 0 !important;
+   a:hover, a:active:hover, a:-webkit-any-link:hover{
+      color: var(--text-color);
+   }
+   a:active, a:-webkit-any-link{
+       color: var(--text-lighter-color);
+       text-decoration: none;
+   }
+   .p{
+      padding: 12px 24px;
+   }
+   .ellipsis-text{
+      &:hover{
+         overflow: visible; 
+         white-space: normal;
+         height:auto;  /* just added this line */
+      }
+    }
+   .product-container{
+      &:hover{
+         .product-name, .product-card{
+            cursor: pointer;
+            color: var(--primary-color) !important;
+            border-color: var(--primary-color) !important;
+         }
+      }
+    }
+    .mat-button-toggle-checked{
+      background-color: var(--primary-color);
+    }
+    mat-drawer-content{
+      margin-right: 0 !important;
+    }
+    [dots]{
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      margin: 12px auto;
+      column-gap: 6px;
+       [dot]{
+         background-color: var(--primary-color);
+         border-radius: 50%;
+         width: 0.5em;
+         height: 0.5em;
+       }
+    }
+    .file-input{
+       cursor: pointer;
+      &:hover{
+         p{
+            color: var(--primary-color) !important;
+         }
+      }
+    }
+
+    [skeleton]{
+      animation: pulse 1.5s infinite;
+      @keyframes pulse {
+        0% {
+          background-color: #EAEAEA;
+        }
+        50% {
+          background-color: #F5F5F5;
+        }
+        100% {
+          background-color: #EAEAEA;
+        }
+      }
+      border-radius: 12px;
+      min-height: 24px;
+      min-width: 24px;
+    }
+    .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mat-mdc-form-field-infix {
+      padding-top: 24px;
+  }
+  .mat-drawer-content{
+   margin: 0;
+}
+ }
+
+
+ .header-wrapper{
+
+ }
+
+ h1,h2,h3,h4,h5,h6,p{
+   font-family: system-ui;
+ }
+
+ .scroller{
+   overflow-x: scroll;
+   width: 100%;
+   scrollbar-width: 0;
+   -ms-overflow-style: none;  /* IE and Edge */
+   scrollbar-width: none;
+   &::-webkit-scrollbar{
+       display: none;
+   }
+ }
+
+ .taxon-img{
+   max-width: 6em;
+   height: auto;
+ }
+
+ .snackbar{
+   background-color: #00C686;
+ }

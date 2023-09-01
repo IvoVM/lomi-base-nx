@@ -1,0 +1,51 @@
+<h3 style="margin-bottom: 0;">Descuentos activos</h3>
+<p style="margin-top: 24px;">Listado de descuentos activos, selecciona uno para visualizar sus productos.</p>
+<div *ngIf="sales.length" style="display: flex;flex-direction: row;flex-wrap: wrap;row-gap: 12px;column-gap: 12px;height: 160px;overflow: scroll;border: 1px solid lightgray;padding: 12px;border-radius: 24px;">
+    <mat-chip (click)="openTaxon(sale)" *ngFor="let sale of sales">
+        {{sale.attributes.name}} <span style="font-weight: bold;">({{sale.relationships.products.data.length}})</span>
+    </mat-chip>
+</div>
+
+<h3 style="margin-bottom: 0;">Categorias</h3>
+<p style="margin-top: 24px;">Listado de categorias principales, selecciona una para visualizar sus productos.</p>
+<div *ngIf="taxons$ | async as taxons">
+    <div style="display: flex;flex-direction: row;column-gap: 1em;" class="scroller">
+        <img *ngFor="let img of taxons.included" class="taxon-img" (click)="searchTaxonById(img.attributes.viewable_id)" src={{img.attributes.cdn_url}} style="border: 1px solid lightgray;border-radius: 24px;">
+    </div>
+</div>
+
+<div *ngIf="loadingTaxons">
+    <div style="display: flex;flex-direction: row;column-gap: 1em;">
+        <div skeleton style="height: 124px;width: 100px;" *ngFor="let mockTaxon of [[],[],[],[],[],[],[],[],[]]">
+        </div>
+    </div>
+</div>
+
+<div style="height: 24px"></div>
+<div style="display: flex;justify-content: space-between;">
+    <h3 style="margin-bottom: 6px;">Listado de productos</h3>
+    <lm-typeahead (query)="onSearch($event)">
+        <p label>Buscar productos</p>
+    </lm-typeahead>
+</div>
+<ng-container *ngIf="products$ | async as products">
+    <p style="margin-top: 0;">Mostrando <span style="font-weight: bold;" > {{products.data.length}} </span> productos de un total de <b>{{products.meta?.total_count || products.data.length}}</b></p>
+    <div style="display: flex; flex-direction: row;column-gap: 24px;flex-wrap: wrap;row-gap: 24px;border: 1px solid lightgray;border-radius: 24px;" class="p">
+        <div *ngFor="let product of products.data" class="product-container">
+           <lm-product-card *ngIf="product.id" (click)="openProduct(product)" [product]="product.attributes"></lm-product-card>
+           <div *ngIf="!product.id">
+                <p skeleton style="height: 1em;width: 100px;"></p>
+                <div skeleton style="height: 100px;width: 100px;"></div>
+           </div>
+        </div>
+    </div>
+</ng-container>
+<ng-container *ngIf="loading">
+    <p skeleton style="height: 1em;"></p>
+    <div style="display: flex; flex-direction: row;column-gap: 24px;flex-wrap: wrap;row-gap: 24px;border: 1px solid lightgray;border-radius: 24px;" class="p">
+        <div *ngFor="let product of [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]" class="product-container">
+            <p skeleton style="height: 1em;width: 100px;"></p>
+           <div skeleton style="height: 100px;width: 100px;"></div>
+        </div>
+    </div>
+</ng-container>

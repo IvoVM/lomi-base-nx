@@ -1,0 +1,27 @@
+<lm-header-model (menuClick)="menuOpened = !menuOpened" [Route]="routes"></lm-header-model>
+<mat-drawer-container class="example-container" autosize>
+    <mat-drawer (closedStart)="opened=false" [opened]="opened" mode="side" position="end">
+        <div>
+            <ng-template adHost></ng-template>
+        </div>
+    </mat-drawer>
+
+    <mat-drawer [opened]="menuOpened" mode="side" position="start">
+        <div menu-item style="display: flex;flex-direction: row;align-items: center;column-gap: 32px;" class="p">
+            <mat-icon>settings</mat-icon>
+            <h4 [routerLink]="'/tasks'" style="font-weight: 300;min-width: 7.5em;">Tareas</h4>
+        </div>
+        <div menu-item style="display: flex;flex-direction: row;align-items: center;column-gap: 32px;" class="p">
+            <mat-icon>store</mat-icon>
+            <h4 [routerLink]="'/stores'" style="font-weight: 300;min-width: 7.5em;">Partners</h4>
+        </div>
+    </mat-drawer>
+<div class="content" class="p">
+      
+        <div style="height: calc(100vh - 70px);overflow-y: scroll;" class="example-sidenav-content">
+            <h2 style="margin-bottom: 0.2em; color: var(--text-color);">{{title}}</h2>
+            <ng-content></ng-content>
+        </div>
+      
+    </div>
+</mat-drawer-container>

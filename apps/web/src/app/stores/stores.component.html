@@ -1,0 +1,18 @@
+<div *ngIf="stockLocations$ | async as stockLocations" style="display: flex;flex-direction: column;row-gap: 24px;margin-top: 24px;">
+    <ng-container *ngFor="let stockLocation of stockLocations">
+        <div *ngIf="stockLocation.stores" style="border: 0.3px solid lightgrey;border-radius: 12px;" class="p">
+            <h3 style="font-weight: 300;">{{stockLocation.name}} <span style="opacity: 0.4;">- {{stockLocation.address1}}</span></h3>
+            <div *ngIf="stockLocation.zones">
+                <div *ngFor="let zone of stockLocation.zones[0]">
+                    <h5 style="margin-bottom: 0;"><b>Tienda: {{stockLocation.stores[0][0].name}}</b> </h5>
+                    <h5 style="margin-top: 0;font-weight: 300;">Zona: {{zone.name}}</h5>
+                    <mat-chip-grid *ngIf="zone.counties">
+                        <mat-chip *ngFor="let county of zone.counties">
+                            {{county[0].name}}
+                        </mat-chip>
+                    </mat-chip-grid>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>

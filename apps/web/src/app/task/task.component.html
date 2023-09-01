@@ -1,0 +1,26 @@
+<div class="task" class="{{task.status}}">
+    <div class="data">
+        <div style="display: flex;margin-bottom: -1.2em;justify-content: right;color:var(--warning-color);cursor: pointer;" *ngIf="task.status != 'success'">
+            <mat-icon (click)="deleteTask()">delete</mat-icon>
+        </div>
+        <h4 *ngIf="task.data.name" style="margin-bottom: 0;font-weight: 500;margin-top: 0;"> {{task.data.name}}</h4>
+        <h4 *ngIf="task.data.id" style="margin-bottom: 0;font-weight: 500;margin-top: 0;"> {{task.data.id}}</h4>
+        <h4 *ngIf="task.data.productId" style="margin-bottom: 0;font-weight: 500;margin-top: 0;"> {{task.data.productId}}</h4>
+        <h5 style="margin-top: 6px;margin-bottom: 0;opacity: 0.5;">{{task.title}}</h5>
+        <h5 style="margin-top: 6px;">{{task.scheduled_at_millis | date}}</h5>
+        <h5 style="margin-top: 6px;">{{task.created_at_millis | date}}</h5>
+    </div>
+    <div style="display: flex;flex-direction: row;column-gap: 12px;">
+        <div class="status {{task.status}}" style="padding: 6px 12px;width: fit-content;">
+            <span *ngIf="task.status === 'success'">Completado con exito</span>
+            <span *ngIf="task.status != 'success'">{{task.status}}</span>
+        </div>
+        <div class="type {{task.type}}" style="padding: 6px 12px; width: fit-content;">
+            <span *ngIf="task.type == 'CREATE_PRODUCT' || task.type ==  'product'">Creación de producto</span>
+            <span *ngIf="task.type == 'promotion'">Promocion de spree</span>
+            <span *ngIf="task.type == 'removePromotion'">Deshacer promoción</span>
+            <span *ngIf="task.type == 'taxon'">Asociar categoria</span>
+        </div>
+        
+    </div>
+</div>

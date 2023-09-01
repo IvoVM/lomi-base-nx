@@ -1,0 +1,8 @@
+<div class="p">
+    <h1>{{taxon?.attributes?.name}}</h1>
+    <lm-stroked-button (click)="demotePromotion()">Bajar promo</lm-stroked-button>
+    <h1>{{taxon.attributes.name}}</h1>
+    <div *ngFor="let product of products">
+        <lm-product-card [product]="product"></lm-product-card>
+    </div>
+</div>

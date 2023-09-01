@@ -1,0 +1,26 @@
+<div style="background-color: var(--grey-light-color);display: flex;flex-direction: row;column-gap: 24px;align-items: center;" class="p">
+    <div style="display: flex;flex-direction: row;column-gap: 24px;">
+        <lm-flat-button (click)="uploadExcel('product')" color="accent">Crear productos en lote</lm-flat-button>
+        <lm-flat-button (click)="uploadExcel('promotion')" color="accent">Promocion (Editar precio de variantes en lote)</lm-flat-button>
+        <lm-flat-button  (click)="uploadExcel('stock')"  color="accent">Cambios de stock en lote por variante</lm-flat-button>
+        <lm-flat-button  (click)="uploadExcel('taxon')"  color="accent">Asociar categoria a productos</lm-flat-button>
+    </div>
+</div>
+<div style="display: flex;flex-direction: row;height: 100%;">
+    <div class="tasks-list" style="display: flex;flex-direction: column;row-gap: 12px;padding: 12px;width: 600px;overflow-y: scroll;height: 100%;">
+        <h2 style="border-bottom: 1px solid lightgray;padding-bottom: 12px;">Programadas</h2>
+        <lm-task *ngFor="let task of processingTasks" [task]="task"></lm-task>
+        <p *ngIf="!pendingTasks.length">No hay nada que procesar</p>
+    </div>
+    <div class="tasks-list" style="display: flex;flex-direction: column;row-gap: 12px;padding: 12px;width: 600px;overflow-y: scroll;height: 100%;">
+        <h2 style="border-bottom: 1px solid lightgray;padding-bottom: 12px;">Por procesar</h2>
+        <lm-task *ngFor="let task of pendingTasks" [task]="task"></lm-task>
+        <p *ngIf="!pendingTasks.length">No hay nada que procesar</p>
+    </div>
+    <div>
+        <h2 style="border-bottom: 1px solid lightgray;padding-bottom: 12px;">Terminadas</h2>
+        <div class="tasks-list" style="display: flex;flex-direction: column;row-gap: 12px;padding: 12px;width: 600px;overflow-y: scroll;height: 100%;">
+            <lm-task *ngFor="let task of tasks" [task]="task"></lm-task>
+        </div>
+    </div>
+</div>

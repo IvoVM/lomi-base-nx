@@ -1,0 +1,13 @@
+<header>
+  <div class="header-wrapper">
+    <mat-icon (click)="menuClicked()" style="margin-right: 24px;cursor: pointer;">
+      <mat-icon>menu</mat-icon>
+    </mat-icon>
+    <ng-content select="[header-logo]"></ng-content>
+    <div class="header-text">
+      <ng-content select="[header-item]"></ng-content>
+    </div>
+    <span class="fill-remaining-space"></span>
+    <ng-content></ng-content>
+  </div>
+</header>

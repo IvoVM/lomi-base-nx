@@ -1,0 +1,6 @@
+.header-item{
+    transition: 0.3s ease;
+    &:hover{
+        color: var(--primary-color);
+    }
+}

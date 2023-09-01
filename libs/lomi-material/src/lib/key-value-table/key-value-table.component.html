@@ -1,0 +1,33 @@
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <ng-container matColumnDef="key">
+    <th mat-header-cell *matHeaderCellDef class="first-column__title">
+      {{ title }}
+    </th>
+    <td
+      mat-cell
+      *matCellDef="let item; let indice = index"
+      class="first-column__cell"
+      [ngClass]="
+        indice === dataSource.length - 1 ? 'first-column__cell-rounded' : ''
+      "
+    >
+      {{ item.key }}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="value">
+    <th mat-header-cell *matHeaderCellDef class="second-column__title"></th>
+    <td
+      mat-cell
+      *matCellDef="let item; let indice = index"
+      class="second-column__cell"
+      [ngClass]="
+        indice === dataSource.length - 1 ? 'second-column__cell-rounded' : ''
+      "
+    >
+      {{ item.value }}
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>

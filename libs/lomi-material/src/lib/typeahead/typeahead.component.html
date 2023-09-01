@@ -1,0 +1,16 @@
+<form class="example-form">
+    <mat-form-field appearance="outline" class="example-full-width">
+      <mat-label><ng-content select="[label]"></ng-content></mat-label>
+      <input type="text"
+             placeholder="Escriba algo para buscar"
+             aria-label="Number"
+             matInput
+             [formControl]="typeAheadControl"
+             [matAutocomplete]="auto">
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        <mat-option (click)="selectItem(option)" *ngFor="let option of currentData" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>

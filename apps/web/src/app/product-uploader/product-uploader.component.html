@@ -1,0 +1,206 @@
+<div class="p">
+    <mat-stepper mat-stretch-tabs="false" mat-align-tabs="start" style="width: var(--modal-width);" [selectedIndex]="selectedTab">
+        <mat-step label="Subir documento">
+            <div style="margin-top: 12px;">
+                <h3 style="margin-bottom: 6px;">Creacion de productos en lote</h3>
+                <p *ngIf="!rows.length" style="margin-top: 0;">Aqui puedes realizar una serie de operaciones para productos en lote, cambio de precios, stock , creacion y mas!</p>
+                <div *ngIf="!rows.length" style="width: 100%;height: 150px;border: 0.3px dashed lightgray;border-radius: 24px;display: flex;justify-content: center;align-items: center;margin-top: 24px;" class="file-input">
+                    <p *ngIf="!selectedFile.name">Arrastre un archivo XLSX o haga click aquí para empezar</p>
+                    <input style="opacity: 0;height: 150px;width: 100%;position: absolute;" (change)="docChange($event)" type=file>
+                    <p *ngIf="selectedFile.name">{{selectedFile.name}}</p>
+                </div>
+                <ng-container *ngIf="rows.length">
+                    <p>Se encontraron <b>{{rows.length}}</b>  productos a trabajar en {{selectedFile.name}}</p>
+                    <p>¿ Deseas avanzar con estos productos?</p>
+                    <div style="display: flex;flex-direction: row;justify-content: center;column-gap: 24px;margin: 24px 0;">
+                        <lm-stroked-button color="warn">No, deseo subir otro archivo</lm-stroked-button>
+                        <lm-flat-button (click)="selectedTab = 1" style="color: white;">Si!, Adelante</lm-flat-button>
+                    </div>
+                </ng-container>
+                <div style="display: flex;flex-direction: row;" class="scroller">
+                    <div class="column" *ngFor="let column of rows[0] | keyvalue" style="border: 0.3px solid lightgray;white-space: nowrap;text-overflow: ellipsis;font-size: 1em;font-weight: 500;font-family: system-ui;font-size: 0.8em;background-color: var(--primary-color);color: white;">
+                        {{column.key}}
+                    </div>
+                </div>
+                <div *ngFor="let row of rows.slice(0,10)" class="row" style="display: flex;flex-direction: row;height: 2em;font-size: 0.7em;font-weight: 300;font-family: system-ui;" class="scroller">
+                    <div class="column" *ngFor="let column of row | keyvalue" style="border: 0.3px solid lightgray;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;align-items: center;display: flex;">
+                        {{column.value}}
+                    </div>
+                </div>
+                <p *ngIf="rows.length">Y otras  <span style="color:var(--primary-color)">{{rows.length - 10}}</span> columnas mas...</p>
+                <ng-container *ngIf="!rows.length">
+                    <p style="font-weight: bold;margin-bottom: 0;">¿ No sabes como debe ser el archivo ? </p>
+                    <p style="margin-top: 6px;">Puedes descargar <a style="color: var(--primary-color);cursor: pointer;" (click)="downloadTemplate()">este archivo </a> y guiarte por su formato :)</p>
+                </ng-container>
+            </div>
+        </mat-step>
+        <mat-step *ngIf="rows.length" label="Procesamiento">
+
+            <div *ngIf="false">
+                <h4 style="margin-bottom: 6px;">Tienda</h4>
+                <div style="display: flex;flex-direction: column;">
+                    <div checkbox-with-field>
+                        <lm-typeahead (itemSelected)="select($event)" [data]="allStockLocations$">
+                            <p label>Selecciona una tienda</p>
+                        </lm-typeahead>
+                    </div>
+                </div>
+            </div>
+           
+
+
+            <h3 style="margin-bottom: 6px;">Mapeo de atributos</h3>
+            <div *ngIf="selectedContext == 'product'" style="display: flex;flex-direction: row;column-gap: 12px;">
+                <div style="width: 100%;">
+                    <h4 style="margin-bottom: 24px;">Producto</h4>
+                    <div style="background-color: var(--accent-color);border-radius: 24px;" class="p">
+                        <div *ngFor="let attribute of inventoryConfiguration.product | keyvalue" style="display: flex;flex-direction: row;justify-content: space-between;">
+                            <p style="margin: 6px 0;color: white;">{{attribute.key}}</p>
+                            <p *ngIf="attribute.value" style="margin: 6px 0;color: var(--primary-color);">{{attribute.value}}</p>
+                            <p *ngIf="!attribute.value" style="margin: 6px 0;color: var(--warning-color);">Sin asignar</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 24px;">Imagenes</h4>
+                    <div style="background-color: var(--accent-color);border-radius: 24px;" class="p">
+                        <div *ngFor="let key of inventoryConfiguration.imageCdns" style="display: flex;flex-direction: row;justify-content: space-between;">
+                            <p style="color:var(--primary-color)">{{key}}</p>
+                        </div>
+                    </div>
+                </div>
+    
+
+            </div>
+            <div *ngIf="selectedContext == 'taxon'" style="display: flex;flex-direction: row;column-gap: 12px;">
+                <div style="width: 100%;">
+                    <h4 style="margin-bottom: 24px;">Categoria</h4>
+                    <div style="background-color: var(--accent-color);border-radius: 24px;" class="p">
+                        <div style="display: flex;flex-direction: row;justify-content: space-between;">
+                            <p style="margin: 6px 0;color: white;">Product ID</p>
+                            <p *ngIf="inventoryConfiguration.variant.id" style="margin: 6px 0;color: var(--primary-color);">{{inventoryConfiguration.variant.id}}</p>
+                            <p *ngIf="!(inventoryConfiguration.variant.id)" style="margin: 6px 0;color: var(--warning-color);">Sin asignar</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 24px;">Categorias</h4>
+                    <div style="background-color: var(--accent-color);border-radius: 24px;" class="p">
+                        <div *ngFor="let key of inventoryConfiguration.taxonsHierarchy" style="display: flex;flex-direction: row;justify-content: space-between;">
+                            <p style="color:var(--primary-color)">{{key}}</p>
+                        </div>
+                    </div>
+                </div>
+    
+
+            </div>
+
+            <div *ngIf="selectedContext == 'stock'">
+                <h4  style="margin-bottom: 24px;">Variante</h4>
+                <div style="display: flex;flex-direction: row;column-gap: 12px;"> 
+                    <div style="background-color: var(--accent-color);border-radius: 24px;width: 100%;" class="p">
+                        <div *ngFor="let attribute of inventoryConfiguration.variantStocks | keyvalue" style="display: flex;flex-direction: row;justify-content: space-between;">
+                            <p style="margin: 6px 0;color: white;">{{attribute.key}}</p>
+                            <p *ngIf="attribute.value" style="margin: 6px 0;color: var(--primary-color);">{{attribute.value}}</p>
+                            <p *ngIf="!attribute.value" style="margin: 6px 0;color: var(--warning-color);">Sin asignar</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div>
+                <div *ngIf="selectedContext == 'promotion'">
+                    <h4 style="margin-bottom: 24px;">Variante</h4>
+                    <div *ngIf="selectedContext == 'promotion'" style="display: flex;flex-direction: row;column-gap: 12px;"> 
+                        <div style="background-color: var(--accent-color);border-radius: 24px;width: 100%;" class="p">
+                            <div *ngFor="let attribute of inventoryConfiguration.variantPromotions | keyvalue" style="display: flex;flex-direction: row;justify-content: space-between;">
+                                <p style="margin: 6px 0;color: white;">{{attribute.key}}</p>
+                                <p *ngIf="attribute.value" style="margin: 6px 0;color: var(--primary-color);">{{attribute.value}}</p>
+                                <p *ngIf="!attribute.value" style="margin: 6px 0;color: var(--warning-color);">Sin asignar</p>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 style="margin-bottom: 24px;">Categorias</h4>
+                    <div style="background-color: var(--accent-color);border-radius: 24px;" class="p">
+                        <div *ngFor="let key of inventoryConfiguration.taxonsHierarchy" style="display: flex;flex-direction: row;justify-content: space-between;">
+                            <p style="color:var(--primary-color)">{{key}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="selectedContext == 'product'">
+                <h6 style="color:var(--warning-color)" *ngIf="!inventoryConfiguration.imageCdns.length">No hay imagenes</h6>
+                <h6 style="color:var(--warning-color)" *ngIf="!inventoryConfiguration.taxonsHierarchy.length">No hay una categoria asignada</h6>
+                <h6 style="color:var(--warning-color)" *ngIf="!inventoryConfiguration.product.master_sku">El sku es obligatorio</h6>
+                <h6 style="color:var(--warning-color)" *ngIf="!inventoryConfiguration.product.ean">El ean es obligatorio</h6>
+                <div style="margin-top: 24px;">
+                    <lm-flat-button (click)="doTasks()" *ngIf="inventoryConfiguration.imageCdns.length && inventoryConfiguration.taxonsHierarchy.length && inventoryConfiguration.product.master_sku && inventoryConfiguration.product.ean" color="primary">Crear productos</lm-flat-button>
+                </div>
+            </div>
+
+            <div *ngIf="selectedContext == 'promotion'">
+                <form>
+                    <mat-form-field style="margin-top: 24px;">
+                        <mat-label>Enter a date range</mat-label>
+                        <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+                          <input matStartDate formControlName="start" placeholder="Start date">
+                          <input matEndDate formControlName="end" placeholder="End date">
+                        </mat-date-range-input>
+                        <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-date-range-picker #picker></mat-date-range-picker>
+                      
+                        <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+                        <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+                      </mat-form-field>
+                </form>
+                <h6 style="color:var(--warning-color)" *ngIf="!inventoryConfiguration.variant.id">Se necesita id de variante</h6>
+                <h6 style="color:var(--warning-color)" *ngIf="!inventoryConfiguration.taxonsHierarchy.length">No hay una categoria asignada</h6>
+                <h6 style="color:var(--warning-color)" *ngIf="!inventoryConfiguration.variant.price">No hay precio</h6>
+                <h6 style="color:var(--warning-color)" *ngIf="!inventoryConfiguration.variant.compare_at_price">No hay precio de comparacion</h6>
+                <h6 style="color:var(--warning-color)" *ngIf="!range.value.start || !range.value.end">Debe seleccionar un periodo de tiempo</h6>
+                <div style="margin-top: 24px;">
+                    <lm-flat-button (click)="doTasks()" *ngIf="range.value.start && range.value.end && inventoryConfiguration.variant.compare_at_price && inventoryConfiguration.variant.compare_at_price && inventoryConfiguration.taxonsHierarchy.length && inventoryConfiguration.variant.id" color="primary">Subir promoción</lm-flat-button>
+                </div>
+            </div>
+
+            <div *ngIf="selectedContext == 'taxon'">
+                <h6 style="color:var(--warning-color)" *ngIf="!inventoryConfiguration.variant.id">Se necesita id de producto</h6>
+                <div style="margin-top: 24px;">
+                    <lm-flat-button (click)="doTasks()" *ngIf="inventoryConfiguration.variant.id" color="primary">Agregar taxonomia</lm-flat-button>
+                </div>
+            </div>
+
+            <div *ngIf="selectedContext == 'stock'">
+                <h6 style="color:var(--warning-color)" *ngIf="!inventoryConfiguration.variantStocks.id">Se necesita id de variante</h6>
+                <h6 style="color:var(--warning-color)" *ngIf="!inventoryConfiguration.variantStocks.stock">se necesita el monto de stock</h6>
+                <div style="margin-top: 24px;">
+                    <lm-flat-button (click)="doTasks()" *ngIf="inventoryConfiguration.variantStocks.id && inventoryConfiguration.variantStocks.stock" color="primary">Cambiar stock</lm-flat-button>
+                </div>
+            </div>
+        </mat-step>
+        <mat-step label="Resumen" *ngIf="false" >
+            <h3 style="margin-bottom: 12px;">Detalle</h3>
+            <div *ngIf="selectedContext == 'promotion'">
+                <ul>
+                    <li><p style="margin-top: 0;margin-bottom:0">Operaremos sobre {{rows.length}} Productos</p></li>
+                    <li><p style="margin-top: 0;margin-bottom:0">Asociaremos cada fila a una categoria</p></li>
+                    <li><p style="margin-top: 0;margin-bottom:0">Cambiaremos el precio de la variante al especificado</p></li>
+                    <li><p style="margin-top: 0;margin-bottom:0">El precio antiguo quedara en compare_at_price para poder bajar la promocion posteriormente</p></li>
+                </ul>
+            </div>
+            <div *ngIf="selectedContext == 'product'">
+                <ul>
+                    <li><p style="margin-top: 0;margin-bottom:0">Operaremos sobre {{rows.length}} Productos</p></li>
+                    <li><p style="margin-top: 0;margin-bottom:0">Estos no podran ser comprados con sodexo</p></li>
+                </ul>
+                <h4 style="margin-top: 24px;">Previsualizacion producto</h4>
+                <div *ngIf="selectedContext == 'product'" style="display: flex;flex-direction: row;column-gap: 12px;flex-wrap: wrap;column-gap: 12px;">
+                    <lm-product-card *ngFor="let selectedRow of rows.slice(0,20)" [product]="toSpreeProduct(selectedRow)"></lm-product-card>
+                </div>
+            </div>
+
+            <lm-flat-button color="primary"  mat-button >Crear productos</lm-flat-button>
+        </mat-step>
+      </mat-stepper>
+</div>

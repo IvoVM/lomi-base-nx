@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+header {
+  background-color: #fff;
+  font-family: system-ui;
+  font-weight: 400;
+  color: #4e556c;
+  .header-wrapper {
+    padding: 0.3rem 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: var(--accent-color) 0.3px solid;
+    .header-text {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &:before {
+        content: '';
+        height: 32px;
+      }
+    }
+
+    .fill-remaining-space {
+      flex: 1 1 auto;
+    }
+  }
+}

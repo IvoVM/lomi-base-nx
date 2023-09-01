@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+.dialog-wrapper {
+  font-family: 'Nunito', sans-serif;
+  padding: 12px;
+  background-color: #fff;
+  font-weight: 600;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  .dialog-close {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    svg {
+      cursor: pointer;
+    }
+  }
+  .dialog-options {
+    padding: 0 2rem;
+    .mat-mdc-radio-group {
+      display: flex;
+      flex-direction: column;
+      padding: 1rem 0;
+    }
+  }
+}

@@ -1,0 +1,6 @@
+<lm-dropdown>
+  <lm-dropdown-title> {{ label }}</lm-dropdown-title>
+  <lm-dropdown-item *ngFor="let item of Routes" mat-menu-item [routerLink]="[item.routeHref]"
+    >{{ item.icon }} {{ item.name }}</lm-dropdown-item
+  >
+</lm-dropdown>

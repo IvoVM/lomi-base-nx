@@ -1,0 +1,51 @@
+<div *ngIf="dataLoaded" [@slideIn]>
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">Últimas órdenes</h3>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover text-nowrap mb-0">
+          <thead>
+            <tr>
+              <th>Cliente</th>
+              <th>ID</th>
+              <th>Productos</th>
+              <th>Comprado desde</th>
+              <th>Valor total</th>
+              <th>Detalles</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="
+                let order of recentOrders
+                  | paginate : { itemsPerPage: 5, currentPage: page }
+              "
+            >
+              <td>
+                {{ order.email }}
+              </td>
+              <td>#{{ order.id }}</td>
+              <td>{{ order.shipments_length }}</td>
+              <td>{{ order.channel }}</td>
+              <td class="font-weight-semibold fs-15">${{ order.total }}</td>
+              <td>
+                <app-off-canvas
+                  class="badge bg-primary text-white cursor-pointer"
+                  [data]="[order.shipments, order.id, order.total, order.email]"
+                  >ver detalles</app-off-canvas
+                >
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <pagination-controls
+          (pageChange)="page = $event"
+          [previousLabel]="''"
+          [nextLabel]="''"
+        ></pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>

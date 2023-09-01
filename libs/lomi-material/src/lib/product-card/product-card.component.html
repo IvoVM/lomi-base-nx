@@ -1,0 +1,15 @@
+<ng-container *ngIf="product">
+    <p class="ellipsis-text product-name" style="width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;font-size: 0.8em;border-bottom: 1px solid lightgray;padding-bottom: 6px;font-weight: 600;">{{product.name}}</p>
+    <div class="product-card" *ngIf="product.images" style="border: 1px solid lightgray;border-radius: 24px;overflow: hidden;">
+        <img *ngIf="product.images[0]?.attributes?.styles.length" [src]="'https://lomi.cl/'+product.images[0].attributes.styles[1].url">
+        <img style="width: 100px;width: 100px;" *ngIf="!(product.images[0]?.attributes?.styles)" [src]="product.images[0]">
+        <div *ngIf="!product.images.length" class="p">
+            <div *ngFor="let variant of product.variants" style="display: flex;flex-direction: row;column-gap: 12px;">
+                <b><p>Item ID: {{variant.id}}</p></b>
+                <p>Price: {{variant.attributes.price}}</p>
+                <p *ngIf="variant.attributes.compare_at_price">Compare At Price: {{variant.attributes.compare_at_price}}</p>
+                <p>Bodega: <b>{{variant.relationships.stock_locations.data[0]?.id}}</b></p>
+            </div>
+        </div>
+    </div>
+</ng-container>

@@ -1,0 +1,44 @@
+<form class="login-form" [formGroup]="form" (ngSubmit)="login()">
+  <mat-form-field class="example-full-width">
+    <input
+      type="email"
+      matInput
+      [formControl]="emailFormControl"
+      placeholder="Correo electrónico"
+    />
+    <mat-error
+      *ngIf="
+        emailFormControl.hasError('email') &&
+        !emailFormControl.hasError('required')
+      "
+    >
+      Esta dirección de email no existe
+    </mat-error>
+    <mat-error *ngIf="emailFormControl.hasError('required')">
+      El email es <strong> requerido</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <input
+      type="password"
+      matInput
+      [formControl]="passwordFormControl"
+      placeholder="Contraseña"
+    />
+    <mat-error
+      *ngIf="
+        passwordFormControl.hasError('minlength') &&
+        !passwordFormControl.hasError('required')
+      "
+    >
+      Mínimo 3 caracteres
+    </mat-error>
+    <mat-error *ngIf="passwordFormControl.hasError('required')">
+      Por favor, ingrese una <strong>contraseña</strong>
+    </mat-error>
+  </mat-form-field>
+  <lm-raised-button [color]="'accent'" type="submit">Ingresar</lm-raised-button>
+  <mat-error *ngIf="this.error" class="not-authorized">
+    {{ errorMessage }}
+  </mat-error>
+</form>

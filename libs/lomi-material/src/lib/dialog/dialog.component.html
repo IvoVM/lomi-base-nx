@@ -1,0 +1,50 @@
+<div class="dialog-wrapper">
+  <div class="dialog-close">
+    <svg
+      mat-dialog-close
+      width="15px"
+      height="15px"
+      viewBox="0 0 16 16"
+      xmlns="http://www.w3.org/2000/svg"
+      version="1.1"
+      fill="none"
+      stroke="#5c5c5c"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="1.5"
+    >
+      <g id="SVGRepo_bgCarrier" stroke-width="0" />
+      <g
+        id="SVGRepo_tracerCarrier"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <g id="SVGRepo_iconCarrier">
+        <path d="m10.25 5.75-4.5 4.5m0-4.5 4.5 4.5" />
+        <circle cx="8" cy="8" r="6.25" />
+      </g>
+    </svg>
+  </div>
+  <div class="dialog-options">
+    <label id="example-radio-group-label">{{ title }}</label>
+    <mat-radio-group
+      aria-labelledby="example-radio-group-label"
+      class="example-radio-group"
+      [(ngModel)]="answer"
+    >
+      <mat-radio-button
+        class="example-radio-button"
+        *ngFor="let item of options"
+        [value]="item.value"
+      >
+        {{ item.name }}
+      </mat-radio-button>
+    </mat-radio-group>
+    <lm-dialog-button
+      *ngFor="let action of dialogActions"
+      (click)="(action.onClick)"
+      [mat-dialog-close]="this.answer"
+      >{{ action.text }}</lm-dialog-button
+    >
+  </div>
+</div>

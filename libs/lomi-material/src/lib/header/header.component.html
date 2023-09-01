@@ -1,0 +1,11 @@
+<lm-header (menuClick)="menuClick.emit()">
+  <lm-header-logo [routerLink]="'/'" header-logo img="{{ LogoIMG }}"></lm-header-logo>
+  <lm-header-item [routerLink]="[item.routeHref]" header-item *ngFor="let item of Route"><p class="header-item">{{
+    item.name
+  }}</p></lm-header-item>
+  <lm-dropdown-model
+    [label]="dropdownLabel"
+    [Routes]="dropdownRoute"
+    *ngIf="dropdown"
+  ></lm-dropdown-model>
+</lm-header>
